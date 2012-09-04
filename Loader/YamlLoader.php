@@ -134,6 +134,12 @@ class YamlLoader {
             'orm'       => 'doctrine',
             'mongodb'   => 'doctrine.odm.mongodb',
         );
+        // Older versions of the Doctrine bundle don't handle the "getManager" method
+        if($persistence === 'orm'){
+            return $this->kernel->getContainer()
+            ->get($managers[$persistence])->getEntityManager();
+        }
+        // Otherwise return the default manager
         return $this->kernel->getContainer()
             ->get($managers[$persistence])->getManager();
     }
