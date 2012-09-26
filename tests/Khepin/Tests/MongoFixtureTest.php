@@ -105,9 +105,9 @@ class MongoFixtureTest extends BaseTestCaseMongo {
         $this->assertTrue('toyota' === $car->getName());
     }
 
-    public function testEmbeddedDocs(){
+    public function testEmbedOne(){
         $loader = new YamlLoader($this->kernel, array('SomeBundle'), 'DataFixtures');
-        $loader->loadFixtures('embedded_docs');
+        $loader->loadFixtures('embed_one');
 
         $repo = $this->doctrine->getManager()->getRepository('Khepin\Fixture\Document\Article');
         $articles = $repo->findAll();
@@ -119,4 +119,19 @@ class MongoFixtureTest extends BaseTestCaseMongo {
 
         $this->assertEquals($author->getName(), 'Paul');
     }
+
+    public function testEmbedMany(){
+        $loader = new YamlLoader($this->kernel, array('SomeBundle'), 'DataFixtures');
+        $loader->loadFixtures('embed_many');
+
+        $repo = $this->doctrine->getManager()->getRepository('Khepin\Fixture\Document\Article');
+        $articles = $repo->findAll();
+        $this->assertEquals($articles->count(), 1);
+        $article = $articles->getNext();
+        $this->assertInstanceOf('Khepin\Fixture\Document\Article', $article);
+        $tags = $article->getTags();
+        $this->assertEquals('YAML', $tags[0]->getName());
+        $this->assertEquals($tags->count(), 2);
+    }
+
 }
