@@ -12,8 +12,8 @@
         }
     ],
     "require": {
-        "doctrine/doctrine-fixtures-bundle": "2.*",
-        "doctrine/orm": "2.*",
+        "doctrine/doctrine-fixtures-bundle": "*",
+        "doctrine/orm": "2.3.*",
         "doctrine/doctrine-bundle": "dev-master"
     },
     "require-dev": {
@@ -21,10 +21,11 @@
         "mockery/mockery": "dev-master"
     },
     "autoload": {
-        "psr-0": { 
+        "psr-0": {
             "Khepin\\YamlFixturesBundle": "",
             "Khepin": "tests"
         }
     },
+    "minimum-stability": "dev",
     "target-dir": "Khepin/YamlFixturesBundle"
 }
