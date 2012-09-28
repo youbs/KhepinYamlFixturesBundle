@@ -10,11 +10,15 @@ class OrmYamlFixture extends AbstractFixture {
         $mapping = array_keys($metadata->fieldMappings);
         $associations = array_keys($metadata->associationMappings);
 
-        $object = new $class;
+        // Instantiate new object
+        $constructorArgs = isset($options['constructor_args']) ? $options['constructor_args'] : array();
+        $rc = new \ReflectionClass($class);
+        $object = $rc->newInstanceArgs($constructorArgs);
+
         foreach ($data as $field => $value) {
             // Add the fields defined in the fistures file
             $method = Inflector::camelize('set_' . $field);
-            // 
+            //
             if (in_array($field, $mapping)) {
                 // Dates need to be converted to DateTime objects
                 $type = $metadata->fieldMappings[$field]['type'];

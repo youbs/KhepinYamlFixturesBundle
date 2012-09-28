@@ -20,8 +20,14 @@ class MongoYamlFixture extends AbstractFixture {
         // options to state if a document is to be embedded or persisted on its own
         $embedded = isset($options['embedded']);
         $mapping = array_keys($metadata->fieldMappings);
+
         // Instantiate new object
-        $object = new $class;
+        if (isset($options['constructor_args'])) {
+            $rc = new \ReflectionClass($class);
+            $object = $rc->newInstanceArgs($options['constructor_args']);
+        } else {
+            $object = new $class();
+        }
 
         foreach ($data as $field => $value) {
             // Add the fields defined in the fixtures file
@@ -69,6 +75,7 @@ class MongoYamlFixture extends AbstractFixture {
                 // The key is not a field's name but the name of a method to be called
                 $object->$method($value);
             }
+
         }
 
         // Save a reference to the current object
