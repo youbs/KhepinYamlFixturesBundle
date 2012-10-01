@@ -134,4 +134,16 @@ class MongoFixtureTest extends BaseTestCaseMongo {
         $this->assertEquals($tags->count(), 2);
     }
 
+    public function testConstruct()
+    {
+        $loader = new YamlLoader($this->kernel, array('SomeBundle'), 'DataFixtures');
+        $loader->loadFixtures('construct');
+
+        $repo = $this->doctrine->getManager()->getRepository('Khepin\Fixture\Document\Car');
+        $car = $repo->findOneBy(array('name' => 'Mercedes'));
+        $this->assertTrue('Mercedes' === $car->getName());
+        $date = new \DateTime('2012-01-01');
+        $this->assertEquals($date, $car->getDatePurchased());
+    }
+
 }

@@ -5,25 +5,25 @@ namespace Khepin\Fixture\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity() 
+ * @ORM\Entity()
  */
 class Car {
-    
+
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @ORM\Column(type="string")
      */
     private $name;
-    
+
     /**
      * @ORM\Column(type="date", nullable=true)
-     * @var type 
+     * @var type
      */
     private $date_purchased;
 
@@ -32,23 +32,29 @@ class Car {
      * @var Owner
      */
     private $owner;
-    
+
+    public function __construct($name = null, $datePurchased = null)
+    {
+        $this->name = $name;
+        $this->date_purchased = new \DateTime($datePurchased);
+    }
+
     public function getId(){
         return $this->id;
     }
-    
+
     public function getName(){
         return $this->name;
     }
-    
+
     public function setName($name){
         $this->name = $name;
     }
-    
+
     public function getDatePurchased(){
         return $this->date_purchased;
     }
-    
+
     public function setDatePurchased(\DateTime $date_purchased){
         $this->date_purchased = $date_purchased;
     }

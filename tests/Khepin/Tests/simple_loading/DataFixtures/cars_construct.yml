@@ -1,0 +1,7 @@
+model: Khepin\Fixture\Entity\Car
+tags: [ construct ]
+fixtures:
+  mercedes:
+    __construct:
+      - Mercedes
+      - "2012-01-01"
