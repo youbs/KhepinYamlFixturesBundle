@@ -8,13 +8,13 @@ use Doctrine\Common\Persistence\ObjectManager;
 abstract class AbstractFixture {
 
     protected $tags = array();
-    
+
     protected $file;
-    
+
     protected $loader;
 
     protected $manager;
-    
+
     public function __construct(array $data, $loader) {
         $this->file = $data;
         if(isset($this->file['tags'])){
@@ -22,11 +22,11 @@ abstract class AbstractFixture {
         }
         $this->loader = $loader;
     }
-    
+
     /**
      * Returns if the given tag is set for the current fixture
      * @param type $tag
-     * @return boolean 
+     * @return boolean
      */
     public function hasTag(Array $tags){
         // if no tags were specified, the fixture should always be loaded
@@ -59,7 +59,12 @@ abstract class AbstractFixture {
         $metadata = $this->getMetaDataForClass($class);
 
         foreach ($this->file['fixtures'] as $reference => $fixture_data) {
-            $object = $this->createObject($class, $fixture_data, $metadata);
+            $options = array();
+            if(isset($fixture_data['__construct'])) {
+                $options['constructor_args'] = $fixture_data['__construct'];
+                unset($fixture_data['__construct']);
+            }
+            $object = $this->createObject($class, $fixture_data, $metadata, $options);
             $this->loader->setReference($reference, $object);
             if(!$this->isReverseSaveOrder()){
                 $manager->persist($object);
@@ -85,7 +90,7 @@ abstract class AbstractFixture {
     /**
      * For fixtures that have relations to the same table, they need to appear
      * in the opposite order that they need to be saved.
-     * @return boolean 
+     * @return boolean
      */
     public function isReverseSaveOrder(){
         if(!isset($this->file['save_in_reverse']) || $this->file['save_in_reverse'] == false){
