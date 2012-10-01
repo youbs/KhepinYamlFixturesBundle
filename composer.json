@@ -14,11 +14,11 @@
     "require": {
         "doctrine/doctrine-fixtures-bundle": "*",
         "doctrine/orm": "2.3.*",
-        "doctrine/doctrine-bundle": "dev-master"
+        "doctrine/doctrine-bundle": "*"
     },
     "require-dev": {
-        "doctrine/mongodb-odm-bundle": "dev-master",
-        "mockery/mockery": "dev-master"
+        "doctrine/mongodb-odm-bundle": "*",
+        "mockery/mockery": "*"
     },
     "autoload": {
         "psr-0": {
