@@ -1,5 +1,4 @@
-model: Khepin\Fixture\Document\Car
-persistence: mongodb
+model: Khepin\Fixture\Entity\Car
 tags: [ construct ]
 fixtures:
   mercedes:

@@ -36,7 +36,7 @@ class Car {
     public function __construct($name = null, $datePurchased = null)
     {
         $this->name = $name;
-        $this->date_purchased = $datePurchased;
+        $this->date_purchased = new \DateTime($datePurchased);
     }
 
     public function getId(){
